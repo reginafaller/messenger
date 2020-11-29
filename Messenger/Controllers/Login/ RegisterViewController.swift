@@ -73,8 +73,7 @@ class RegisterViewController: UIViewController {
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .white
-        field.isSecureTextEntry = true
-        field.textContentType = .oneTimeCode
+        //field.isSecureTextEntry = true
         return field
     }()
     
@@ -174,8 +173,9 @@ class RegisterViewController: UIViewController {
             alertUserLoginError()
             return
         }
-        //firebase Login
         
+        
+        //firebase Login
         DatabaseManager.shared.userExists(with: email, completion: { [weak self] exists in
             guard let strongSelf = self else {
                 return
@@ -189,7 +189,7 @@ class RegisterViewController: UIViewController {
             
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error in
                 guard authResult != nil, error == nil else {
-                    print("Error creating user")
+                    print("Error creating user \(String(describing: error))")
                     return
                 }
                 
